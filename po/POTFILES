@@ -1,0 +1,7 @@
+data/com.sciocode.multiclipper.desktop.in
+data/com.sciocode.multiclipper.appdata.xml.in
+data/com.sciocode.multiclipper.gschema.xml
+src/window.ui
+src/main.vala
+src/window.vala
+

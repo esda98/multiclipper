@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=multiclipper
+Exec=multiclipper
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true
