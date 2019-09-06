@@ -4,6 +4,8 @@ multiclipper_sources = [
   'Pin.vala',
   'HistoryManager.vala',
   'HistoricClipboard.vala',
+  'UI/Widgets/PinWidget.vala',
+  'UI/Widgets/HistoryWidget.vala',
 ]
 
 multiclipper_deps = [

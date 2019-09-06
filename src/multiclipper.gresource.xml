@@ -2,5 +2,7 @@
 <gresources>
   <gresource prefix="/com/sciocode/multiclipper">
     <file>window.ui</file>
+    <file>UI/Widgets/PinWidget.ui</file>
+    <file>UI/Widgets/HistoryWidget.ui</file>
   </gresource>
 </gresources>

@@ -1,6 +1,6 @@
 /* main.vala
  *
- * Copyright 2019 Erik
+ * Copyright 2019 Erik Abramczyk
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,11 @@ int main (string[] args) {
 		if (win == null) {
 			win = new Multiclipper.Window (app);
 		}
+
+        //Gtk.CssProvider css_provider = new Gtk.CssProvider ();
+        //css_provider.load_from_resource ("style.css");
+        //Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_USER);
+
 		win.present ();
 	});
 

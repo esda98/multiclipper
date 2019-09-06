@@ -27,7 +27,7 @@ namespace Multiclipper {
 		[GtkChild]
 		FlowBox boxPins;
 		[GtkChild]
-		FlowBox boxHistory;
+		ListBox boxHistory;
 
 		Mutex historyLock = Mutex();
 		Mutex pinLock = Mutex();
@@ -37,6 +37,7 @@ namespace Multiclipper {
 		GLib.ListStore pins = new GLib.ListStore(typeof(Pin));
 
 		public Window (Gtk.Application app) {
+		    Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = true;
 			Object (application: app);
 			btnAddPin.clicked.connect(newPinClicked);
             boxPins.bind_model(pins, createPinWidget);
@@ -60,7 +61,7 @@ namespace Multiclipper {
 		 void newHistoryItem(HistoricClipboard item) {
 		    historyLock.lock();
 		    stdout.printf("new history item: %s\n", item.textValue);
-		    history.append(item);
+		    history.insert(0, item);
 		    historyLock.unlock();
 		}
 

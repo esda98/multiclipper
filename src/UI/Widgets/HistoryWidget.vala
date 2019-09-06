@@ -1,6 +1,6 @@
-/* Pin.vala
+/* window.vala
  *
- * Copyright 2019 Erik Abramczyk
+ * Copyright 2019 Erik
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,29 +15,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 using Gtk;
+using Gdk;
+using Gee;
 using Multiclipper;
 
 namespace Multiclipper {
-    public class Pin : Object {
-        public string name;
-        public string text;
-        public string category;
+	[GtkTemplate (ui = "/com/sciocode/multiclipper/UI/Widgets/HistoryWidget.ui")]
+	public class HistoryWidget : EventBox {
+		[GtkChild]
+		Label lblText;
 
-        public Pin(string givenName, string givenText, string givenCategory) {
-            name = givenName;
-            text = givenText;
-            category = givenCategory;
-        }
+		public signal void copyText();
 
-        public void copyTextToClipboard() {
-            var defaultClip = Clipboard.get_default(Gdk.Display.get_default());
-            defaultClip.set_text(text, text.length);
-        }
-
-        public Widget buildWidget() {
-		    return new PinWidget(this);
-        }
-    }
+		public HistoryWidget (HistoricClipboard historyToDisplay) {
+		    lblText.set_text(historyToDisplay.textValue);
+		}
+	}
 }

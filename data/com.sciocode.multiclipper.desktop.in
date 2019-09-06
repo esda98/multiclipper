@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=multiclipper
+Name=MutliClipper
 Exec=multiclipper
 Terminal=false
 Type=Application
-Categories=GTK;
+Categories=Utility;Accessories;GTK;
 StartupNotify=true

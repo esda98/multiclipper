@@ -4,8 +4,8 @@
   <requires lib="gtk+" version="3.20"/>
   <template class="MulticlipperWindow" parent="GtkApplicationWindow">
     <property name="can_focus">False</property>
-    <property name="default_width">600</property>
-    <property name="default_height">300</property>
+    <property name="default_width">800</property>
+    <property name="default_height">400</property>
     <child type="titlebar">
       <object class="GtkHeaderBar" id="header_bar">
         <property name="visible">True</property>
@@ -33,19 +33,19 @@
         <property name="can_focus">False</property>
         <child>
           <object class="GtkScrolledWindow">
+            <property name="width_request">180</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="hexpand">True</property>
             <property name="shadow_type">in</property>
             <child>
               <object class="GtkViewport">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkFlowBox" id="boxPins">
+                  <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="hexpand">True</property>
+                    <property name="label" translatable="yes">Sidebar (eventually)</property>
                   </object>
                 </child>
               </object>
@@ -61,16 +61,25 @@
           <object class="GtkScrolledWindow">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="hexpand">True</property>
             <property name="shadow_type">in</property>
-            <property name="min_content_width">200</property>
             <child>
               <object class="GtkViewport">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkFlowBox" id="boxHistory">
+                  <object class="GtkFlowBox" id="boxPins">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="margin_left">4</property>
+                    <property name="margin_right">4</property>
+                    <property name="margin_top">4</property>
+                    <property name="margin_bottom">4</property>
+                    <property name="hexpand">True</property>
+                    <property name="column_spacing">4</property>
+                    <property name="row_spacing">4</property>
+                    <property name="selection_mode">none</property>
+                    <property name="activate_on_single_click">False</property>
                   </object>
                 </child>
               </object>
@@ -80,6 +89,37 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="shadow_type">in</property>
+            <property name="min_content_width">250</property>
+            <child>
+              <object class="GtkViewport">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkListBox" id="boxHistory">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_left">4</property>
+                    <property name="margin_right">4</property>
+                    <property name="margin_top">4</property>
+                    <property name="margin_bottom">4</property>
+                    <property name="selection_mode">none</property>
+                    <property name="activate_on_single_click">False</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
           </packing>
         </child>
       </object>
