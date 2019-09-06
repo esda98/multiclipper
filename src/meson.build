@@ -1,9 +1,9 @@
 multiclipper_sources = [
   'main.vala',
-  'window.vala',
-  'Pin.vala',
-  'HistoryManager.vala',
-  'HistoricClipboard.vala',
+  'UI/Windows/MainWindow.vala',
+  'Data/Pin.vala',
+  'Classes/HistoryManager.vala',
+  'Data/HistoricClipboard.vala',
   'UI/Widgets/PinWidget.vala',
   'UI/Widgets/HistoryWidget.vala',
 ]

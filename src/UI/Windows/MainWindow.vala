@@ -20,8 +20,8 @@ using Gee;
 using Multiclipper;
 
 namespace Multiclipper {
-	[GtkTemplate (ui = "/com/sciocode/multiclipper/window.ui")]
-	public class Window : ApplicationWindow {
+	[GtkTemplate (ui = "/com/sciocode/multiclipper/UI/Windows/MainWindow.ui")]
+	public class MainWindow : ApplicationWindow {
 		[GtkChild]
 		Button btnAddPin;
 		[GtkChild]
@@ -36,7 +36,7 @@ namespace Multiclipper {
 		GLib.ListStore history = new GLib.ListStore(typeof(HistoricClipboard));
 		GLib.ListStore pins = new GLib.ListStore(typeof(Pin));
 
-		public Window (Gtk.Application app) {
+		public MainWindow (Gtk.Application app) {
 		    Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = true;
 			Object (application: app);
 			btnAddPin.clicked.connect(newPinClicked);

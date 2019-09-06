@@ -21,7 +21,7 @@ int main (string[] args) {
         app.activate.connect (() => {
 		var win = app.active_window;
 		if (win == null) {
-			win = new Multiclipper.Window (app);
+			win = new Multiclipper.MainWindow (app);
 		}
 
         //Gtk.CssProvider css_provider = new Gtk.CssProvider ();
