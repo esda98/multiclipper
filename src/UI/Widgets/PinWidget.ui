@@ -23,7 +23,7 @@
             <property name="label" translatable="yes">A Title</property>
             <attributes>
               <attribute name="weight" value="bold"/>
-              <attribute name="size" value="15000"/>
+              <attribute name="size" value="12000"/>
             </attributes>
             <style>
               <class name="CardTitle"/>
@@ -46,6 +46,9 @@
             <property name="wrap">True</property>
             <property name="ellipsize">end</property>
             <property name="lines">4</property>
+            <style>
+              <class name="CardBody"/>
+            </style>
           </object>
           <packing>
             <property name="expand">True</property>
@@ -53,6 +56,9 @@
             <property name="position">1</property>
           </packing>
         </child>
+        <style>
+          <class name="PinBox"/>
+        </style>
       </object>
     </child>
   </template>

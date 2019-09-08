@@ -4,5 +4,6 @@
     <file>UI/Windows/MainWindow.ui</file>
     <file>UI/Widgets/PinWidget.ui</file>
     <file>UI/Widgets/HistoryWidget.ui</file>
+    <file alias="MainWindow.css">UI/Styles/MainWindow.css</file>
   </gresource>
 </gresources>
