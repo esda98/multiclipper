@@ -1,4 +1,4 @@
-/* HistoryWidget.vala
+/* CategoryWidget.vala
  *
  * Copyright 2019 Erik
  *
@@ -21,27 +21,24 @@ using Gee;
 using Multiclipper;
 
 namespace Multiclipper {
-	[GtkTemplate (ui = "/com/sciocode/multiclipper/UI/Widgets/HistoryWidget.ui")]
-	public class HistoryWidget : EventBox {
-		[GtkChild]
-		Label lblText;
+	[GtkTemplate (ui = "/com/sciocode/multiclipper/UI/Widgets/CategoryWidget.ui")]
+	public class CategoryWidget : Box {
+	    [GtkChild]
+	    public RadioButton btnCategory;
 
-		public signal void copyText();
+	    string categoryName;
 
-		public HistoryWidget (HistoricClipboard historyToDisplay) {
-		    lblText.set_text(historyToDisplay.textValue);
+		public signal void showCategory(string categoryName);
+
+		public CategoryWidget (string givenCategoryName) {
+            categoryName = givenCategoryName;
+            btnCategory.set_label(categoryName);
 		}
 
         [GtkCallback]
-        public void btnDeleteClicked() {
-            HistoryManager.getInstance().removeHistoryItemIfPresent(lblText.get_text());
-        }
-
-        [GtkCallback]
-        public void btnCopyClicked() {
-            var labelText = lblText.get_text();
-            var defaultClip = Clipboard.get_default(Gdk.Display.get_default());
-            defaultClip.set_text(labelText, labelText.length);
+        public void btnCategoryClicked() {
+            printf("category %s clicked", categoryName);
+            showCategory(categoryName);
         }
 
 	}

@@ -3,9 +3,11 @@ multiclipper_sources = [
   'UI/Windows/MainWindow.vala',
   'Data/Pin.vala',
   'Classes/HistoryManager.vala',
+  'Classes/PinManager.vala',
   'Data/HistoricClipboard.vala',
   'UI/Widgets/PinWidget.vala',
   'UI/Widgets/HistoryWidget.vala',
+  'UI/Widgets/CategoryWidget.vala',
 ]
 
 multiclipper_deps = [

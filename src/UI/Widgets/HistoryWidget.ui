@@ -73,6 +73,7 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="image">imgCopy</property>
+                <signal name="clicked" handler="btnCopyClicked" object="MulticlipperHistoryWidget" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -87,6 +88,7 @@
                 <property name="receives_default">True</property>
                 <property name="image">imgDelete</property>
                 <property name="image_position">right</property>
+                <signal name="clicked" handler="btnDeleteClicked" object="MulticlipperHistoryWidget" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>

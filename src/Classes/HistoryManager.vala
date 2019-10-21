@@ -57,19 +57,22 @@ namespace Multiclipper {
             if (text == null) { return; }
             stdout.printf("recieved text: %s\n", text);
             string notNullText = ((string)text);
+            removeHistoryItemIfPresent(notNullText);
+            var newItem = new HistoricClipboard(notNullText);
+            history.insert(0,newItem);
+            stdout.printf("History Length: %d\n", history.size);
+            newHistoryItem(newItem);
+        }
+
+        public void removeHistoryItemIfPresent(string text) {
             //see if this item is present already in this list, deleting it and adding the new one at the end of the list if it is the case
             for (int i = 0; i < history.size; i++) {
-                if (history[i].textValue == notNullText) {
+                if (history[i].textValue == text) {
                     history.remove_at(i);
                     removeHistoryItem(i);
                     break;
                 }
             }
-
-            var newItem = new HistoricClipboard(notNullText);
-            history.insert(0,newItem);
-            stdout.printf("History Length: %d\n", history.size);
-            newHistoryItem(newItem);
         }
 
         public signal void newHistoryItem(HistoricClipboard item);

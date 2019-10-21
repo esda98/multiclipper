@@ -1,4 +1,4 @@
-/* window.vala
+/* PinWidget.vala
  *
  * Copyright 2019 Erik
  *
