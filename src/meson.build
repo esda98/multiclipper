@@ -8,7 +8,8 @@ multiclipper_sources = [
   'Classes/PinManager.vala',
   'Data/HistoricClipboard.vala',
   'Data/Pin.vala',
-  'Data/Category.vala'
+  'Data/Category.vala',
+  'Helpers/StringHelper.vala'
 ]
 
 multiclipper_deps = [
