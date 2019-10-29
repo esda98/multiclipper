@@ -30,14 +30,14 @@ namespace Multiclipper {
 
 		public signal void showCategory(string categoryName);
 
-		public CategoryWidget (string givenCategoryName) {
-            categoryName = givenCategoryName;
+		public CategoryWidget (Category givenCategory) {
+            categoryName = givenCategory.categoryName;
             btnCategory.set_label(categoryName);
 		}
 
         [GtkCallback]
         public void btnCategoryClicked() {
-            printf("category %s clicked", categoryName);
+            print("category clicked:" + categoryName + "\n");
             showCategory(categoryName);
         }
 

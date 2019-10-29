@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
+<!-- Generated with glade 3.22.0 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkAdjustment" id="adjustment1">
@@ -11,50 +11,59 @@
     <property name="can_focus">False</property>
     <property name="default_width">900</property>
     <property name="default_height">400</property>
-    <child type="titlebar">
-      <object class="GtkHeaderBar" id="header_bar">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="title">MultiClipper</property>
-        <property name="show_close_button">True</property>
-        <child>
-          <object class="GtkButton" id="btnAddPin">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">False</property>
-            <property name="image">imgDocNew</property>
-            <property name="relief">none</property>
-            <property name="always_show_image">True</property>
-            <signal name="clicked" handler="btnNewPinClicked" object="MulticlipperMainWindow" swapped="no"/>
-          </object>
-          <packing>
-            <property name="pack_type">end</property>
-          </packing>
-        </child>
-      </object>
-    </child>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
-          <object class="GtkScrolledWindow">
-            <property name="width_request">180</property>
+          <object class="GtkBox">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="shadow_type">in</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
             <child>
-              <object class="GtkViewport">
+              <object class="GtkScrolledWindow">
+                <property name="width_request">200</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can_focus">True</property>
+                <property name="shadow_type">in</property>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkViewport">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Sidebar (eventually)</property>
+                    <child>
+                      <object class="GtkListBox" id="boxCategories">
+                        <property name="name">boxCategories</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="btnAddCategory">
+                <property name="label" translatable="yes">Add Category</property>
+                <property name="name">btnAddCategory</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="margin_left">4</property>
+                <property name="margin_right">4</property>
+                <signal name="clicked" handler="btnNewCategoryClicked" object="MulticlipperMainWindow" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="padding">4</property>
+                <property name="pack_type">end</property>
+                <property name="position">1</property>
+              </packing>
             </child>
           </object>
           <packing>
@@ -112,10 +121,6 @@
                   <object class="GtkListBox" id="boxHistory">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="margin_left">4</property>
-                    <property name="margin_right">4</property>
-                    <property name="margin_top">4</property>
-                    <property name="margin_bottom">4</property>
                     <property name="selection_mode">none</property>
                     <property name="activate_on_single_click">False</property>
                   </object>
@@ -131,7 +136,122 @@
         </child>
       </object>
     </child>
+    <child type="titlebar">
+      <object class="GtkHeaderBar" id="header_bar">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="title">MultiClipper</property>
+        <property name="show_close_button">True</property>
+        <child>
+          <object class="GtkButton" id="btnAddPin">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">False</property>
+            <property name="image">imgDocNew</property>
+            <property name="relief">none</property>
+            <property name="always_show_image">True</property>
+            <signal name="clicked" handler="btnNewPinClicked" object="MulticlipperMainWindow" swapped="no"/>
+          </object>
+          <packing>
+            <property name="pack_type">end</property>
+          </packing>
+        </child>
+      </object>
+    </child>
   </template>
+  <object class="GtkPopoverMenu" id="flyNewCategory">
+    <property name="name">flyNewCategory</property>
+    <property name="can_focus">False</property>
+    <property name="relative_to">btnAddCategory</property>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="margin_top">8</property>
+            <property name="margin_bottom">8</property>
+            <property name="label" translatable="yes">New Category</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="txtNewCategoryName">
+            <property name="name">txtNewCategoryName</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="margin_left">4</property>
+            <property name="margin_right">4</property>
+            <property name="margin_top">4</property>
+            <property name="margin_bottom">4</property>
+            <property name="placeholder_text" translatable="yes">Category Name</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="margin_left">4</property>
+            <property name="margin_right">4</property>
+            <property name="margin_bottom">4</property>
+            <property name="spacing">4</property>
+            <property name="homogeneous">True</property>
+            <child>
+              <object class="GtkButton">
+                <property name="label" translatable="yes">Close</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <signal name="clicked" handler="btnCloseNewCategoryClicked" object="MulticlipperMainWindow" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton">
+                <property name="label" translatable="yes">Add</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <signal name="clicked" handler="btnSaveNewCategoryClicked" object="MulticlipperMainWindow" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack_type">end</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="submenu">main</property>
+        <property name="position">1</property>
+      </packing>
+    </child>
+  </object>
   <object class="GtkPopoverMenu" id="flyNewPin">
     <property name="width_request">240</property>
     <property name="height_request">260</property>

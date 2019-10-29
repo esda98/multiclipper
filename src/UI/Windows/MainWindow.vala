@@ -31,6 +31,12 @@ namespace Multiclipper {
 		[GtkChild]
 		PopoverMenu flyNewPin;
 
+		//New Category Elements
+		[GtkChild]
+		PopoverMenu flyNewCategory;
+		[GtkChild]
+		Entry txtNewCategoryName;
+
 		Mutex historyLock = Mutex();
 		Mutex pinLock = Mutex();
 		Mutex categoryLock = Mutex();
@@ -38,7 +44,7 @@ namespace Multiclipper {
 		//ArrayList<Pin> pins = new ArrayList<Pin>();
 		GLib.ListStore history = new GLib.ListStore(typeof(HistoricClipboard));
 		GLib.ListStore pins = new GLib.ListStore(typeof(Pin));
-		GLib.ListStore categories = new GLib.ListStore(typeof(string));
+		GLib.ListStore categories = new GLib.ListStore(typeof(Category));
 
 		public MainWindow (Gtk.Application app) {
 		    Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = true;
@@ -47,18 +53,25 @@ namespace Multiclipper {
             //setup model bindings for display boxes
             boxPins.bind_model(pins, createPinWidget);
 			boxHistory.bind_model(history, createHistoryWidget);
-			boxCategories.bind_model(categories, createCategoriesWidget);
+			boxCategories.bind_model(categories, createCategoryWidget);
 
 			var histManager = HistoryManager.getInstance();
 			histManager.newHistoryItem.connect(newHistoryItem);
 			histManager.removeHistoryItem.connect(removeHistoryItem);
 
 			var pinManager = PinManager.getInstance();
-			pinManager.newCategory = newCategory;
-
+			pinManager.newCategory.connect(newCategory);
+			//get all current categories to pass through to build when these have been created before the pin manager is connected
+			var currentCategories = pinManager.getAllCategories();
+			print("got some categories\n");
+			foreach (var cat in currentCategories) {
+			    newCategory(new Category(cat));
+			    print("cat: " + cat + "\n");
+			}
 		}
 
 
+        //Pin Callbacks
 		[GtkCallback]
 		void btnNewPinClicked() {
 		    print("new pin clicked!!\n");
@@ -76,6 +89,31 @@ namespace Multiclipper {
 		    print("save new pin clicked!!\n");
 		}
 
+		//Category Callbacks
+		[GtkCallback]
+		void btnNewCategoryClicked() {
+		    print("new category clicked!!\n");
+		    flyNewCategory.popup();
+		}
+
+        [GtkCallback]
+		void btnCloseNewCategoryClicked() {
+		    print("close new category clicked!!\n");
+		    txtNewCategoryName.text = "";
+		    flyNewCategory.popdown();
+		}
+
+        [GtkCallback]
+		void btnSaveNewCategoryClicked() {
+		    print("save new category clicked!!\n");
+		    var newCatName = txtNewCategoryName.text;
+		    if (newCatName == null || newCatName.strip() == "") return;
+            print("category name: " + newCatName + "\n");
+            PinManager.getInstance().insertNewCategory(newCatName);
+            flyNewCategory.popdown();
+		}
+
+        //Instance Methods
 		void newPinClicked() {
 		    pinLock.lock();
 		    var newPin = new Pin("A Name " + pins.get_n_items().to_string(), "A Text Value " + pins.get_n_items().to_string(), "A Category");
@@ -97,25 +135,26 @@ namespace Multiclipper {
             historyLock.unlock();
 		}
 
-		void newCategory(string categoryName) {
+		void newCategory(Category newCategory) {
 		    categoryLock.lock();
-		    categories.append(categoryName);
+		    stdout.printf("new category item: %s\n", newCategory.categoryName);
+		    categories.append(newCategory);
 		    categoryLock.unlock();
 		}
 
-		void removeCategory(string categoryName) {
+		void removeCategory(Category removedCategory) {
 		    categoryLock.lock();
 
 		    bool found = false;
-		    int i = 0;
+		    uint i = 0;
+		    var itemCount = categories.get_n_items();
 		    //i will be the index of the matching category as long as found is true
 		    //if found is not true, the category is not present and just ignore this call (should not happen but just in case)
-		    foreach (string c in categories) {
-		        if (c == categoryName) {
-		            found = true;
-		            break;
-		        }
-		        i++;
+		    for (; i < itemCount; i++) {
+		        var item = (Category)categories.get_item(i);
+		        if (item == null || item.categoryName != removedCategory.categoryName) continue;
+		        found = true;
+		        break;
 		    }
 		    if (found) { categories.remove(i); }
 		    categoryLock.unlock();
@@ -134,7 +173,7 @@ namespace Multiclipper {
 		}
 
 		private Widget createCategoryWidget(Object item) {
-            return new CategoryWidget((string)item);
+            return new CategoryWidget((Category)item);
 		}
 		//*** End Widget Creation
 

@@ -1,4 +1,4 @@
-/* main.vala
+/* Category.vala
  *
  * Copyright 2019 Erik Abramczyk
  *
@@ -16,20 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-int main (string[] args) {
-	var app = new Gtk.Application ("com.sciocode.multiclipper", ApplicationFlags.FLAGS_NONE);
-    app.activate.connect (() => {
-		var win = app.active_window;
-		if (win == null) {
-			win = new Multiclipper.MainWindow (app);
-		}
 
-        Gtk.CssProvider css_provider = new Gtk.CssProvider ();
-        css_provider.load_from_resource ("/com/sciocode/multiclipper/MainWindow.css");
-        Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_USER);
 
-		win.present ();
-	});
+using Gtk;
 
-	return app.run (args);
+namespace Multiclipper {
+    public class Category : Object {
+        public string categoryName;
+
+        public Category(string givenCategoryName) {
+            categoryName = givenCategoryName;
+        }
+
+        public Widget buildWidget() {
+            return new CategoryWidget(this);
+        }
+    }
 }

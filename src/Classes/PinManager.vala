@@ -20,15 +20,18 @@
 using Gtk;
 using Gdk;
 using Gee;
+using Multiclipper;
 
 namespace Multiclipper {
     public class PinManager : Object {
         static PinManager? instance;
         Clipboard defaultClip;
+        Mutex pinLock = Mutex();
         HashTable<string, ArrayList<Pin>> pinCategories = new HashTable<string, ArrayList<Pin>>(str_hash, str_equal);
 
         PinManager() {
             defaultClip = Clipboard.get_default(Display.get_default());
+            loadCategories();
         }
 
         public static PinManager getInstance() {
@@ -39,20 +42,38 @@ namespace Multiclipper {
         }
 
         public bool insertNewCategory(string name) {
-            if (pinCategories.get(name) != null) { return false; }
+            pinLock.lock();
+            if (pinCategories.get(name) != null) {
+                pinLock.unlock();
+                return false;
+            }
             pinCategories.insert(name, new ArrayList<Pin>());
-            newCategory(name);
+            newCategory(new Category(name));
+            pinLock.unlock();
             return true;
         }
 
         public async void loadCategories() {
             //later on read from file of saved categories and pins for those categories, just do a default for now
+            print("inserting new category!\n");
             insertNewCategory("Default");
         }
 
-        public signal void newCategory(string name);
+        public ArrayList<string> getAllCategories() {
+            pinLock.lock();
+            //use a value type of array to keep it from changing. I don't think it will but I don't want that chance
+            var keysArr = pinCategories.get_keys_as_array();
+            pinLock.unlock();
+            var keys = new ArrayList<string>();
+            foreach (var k in keysArr) {
+                keys.add(k);
+            }
+            return keys;
+        }
 
-        public signal void removeCategory(string name);
+        public signal void newCategory(Category newCategory);
+
+        public signal void removeCategory(Category removedCategory);
 
     }
 }
