@@ -30,6 +30,8 @@ namespace Multiclipper {
 		ListBox boxCategories;
 		[GtkChild]
 		PopoverMenu flyNewPin;
+		[GtkChild]
+		ComboBoxText cboCategory;
 
 		//New Category Elements
 		[GtkChild]
@@ -54,6 +56,7 @@ namespace Multiclipper {
             boxPins.bind_model(pins, createPinWidget);
 			boxHistory.bind_model(history, createHistoryWidget);
 			boxCategories.bind_model(categories, createCategoryWidget);
+			boxCategories.row_selected.connect(newCategorySelected);
 
 			var histManager = HistoryManager.getInstance();
 			histManager.newHistoryItem.connect(newHistoryItem);
@@ -122,6 +125,15 @@ namespace Multiclipper {
 		}
 
         //*** Signal Handlers
+        void newCategorySelected(ListBox box, ListBoxRow? row) {
+            if (row == null) return;
+            print("new category selected!\n");
+            var rowIndex = row.get_index();
+            var matchingCategory = (Category)categories.get_item(rowIndex);
+            print("matching category: " + matchingCategory.categoryName + "\n");
+        }
+
+
 		void newHistoryItem(HistoricClipboard item) {
 		    historyLock.lock();
 		    stdout.printf("new history item: %s\n", item.textValue);
@@ -139,6 +151,7 @@ namespace Multiclipper {
 		    categoryLock.lock();
 		    stdout.printf("new category item: %s\n", newCategory.categoryName);
 		    categories.append(newCategory);
+		    cboCategory.append_text(newCategory.categoryName);
 		    categoryLock.unlock();
 		}
 

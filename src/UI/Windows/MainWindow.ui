@@ -329,7 +329,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkComboBox" id="cboCategory">
+          <object class="GtkComboBoxText" id="cboCategory">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="margin_left">4</property>

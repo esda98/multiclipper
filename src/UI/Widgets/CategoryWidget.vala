@@ -24,7 +24,7 @@ namespace Multiclipper {
 	[GtkTemplate (ui = "/com/sciocode/multiclipper/UI/Widgets/CategoryWidget.ui")]
 	public class CategoryWidget : Box {
 	    [GtkChild]
-	    public RadioButton btnCategory;
+	    public Label lblCategoryName;
 
 	    string categoryName;
 
@@ -32,14 +32,9 @@ namespace Multiclipper {
 
 		public CategoryWidget (Category givenCategory) {
             categoryName = givenCategory.categoryName;
-            btnCategory.set_label(categoryName);
+            lblCategoryName.set_label(categoryName);
 		}
 
-        [GtkCallback]
-        public void btnCategoryClicked() {
-            print("category clicked:" + categoryName + "\n");
-            showCategory(categoryName);
-        }
 
 	}
 }
