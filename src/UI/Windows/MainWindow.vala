@@ -46,15 +46,17 @@ namespace Multiclipper {
 		[GtkChild]
 		ComboBoxText cboCategory;
 
-
+		//All the locks to make sure no collisions happen
 		Mutex historyLock = Mutex();
 		Mutex pinLock = Mutex();
 		Mutex categoryLock = Mutex();
 
-		//ArrayList<Pin> pins = new ArrayList<Pin>();
+		//ListStore used for binding to a model for display containers
 		GLib.ListStore history = new GLib.ListStore(typeof(HistoricClipboard));
 		GLib.ListStore pins = new GLib.ListStore(typeof(Pin));
 		GLib.ListStore categories = new GLib.ListStore(typeof(Category));
+
+		string selectedCategory = "";
 
 		public MainWindow (Gtk.Application app) {
 		    Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = true;
@@ -72,6 +74,7 @@ namespace Multiclipper {
 
 			var pinManager = PinManager.getInstance();
 			pinManager.newCategory.connect(newCategory);
+			pinManager.newPin.connect(newPin);
 			//get all current categories to pass through to build when these have been created before the pin manager is connected
 			var currentCategories = pinManager.getAllCategories();
 			print("got some categories\n");
@@ -109,7 +112,8 @@ namespace Multiclipper {
 		    //put all three text values in an array for bulk checking of all of them
             if (StringHelper.anyNullOrBlank({name, text, category})) return;
 		    print("save new pin clicked!!\n");
-		    flyNewPin.popdown();
+		    var successfullyInserted = PinManager.getInstance().insertNewPin(category, name, text);
+		    if (successfullyInserted) flyNewPin.popdown();
 		}
 
 		//Category Callbacks
@@ -137,7 +141,7 @@ namespace Multiclipper {
 		}
 		//*** End Callbacks
 
-		
+
 		//*** Start Signal Handlers
 		//History Handlers
 		void newHistoryItem(HistoricClipboard item) {
@@ -155,11 +159,17 @@ namespace Multiclipper {
 
 		//Category Handlers
 		void newCategorySelected(ListBox box, ListBoxRow? row) {
+		    pins.remove_all();
             if (row == null) return;
             print("new category selected!\n");
             var rowIndex = row.get_index();
             var matchingCategory = (Category)categories.get_item(rowIndex);
-            print("matching category: " + matchingCategory.categoryName + "\n");
+			print("matching category: " + matchingCategory.categoryName + "\n");
+			selectedCategory = matchingCategory.categoryName;
+			var pinsForCategory = PinManager.getInstance().getPinsForCategory(selectedCategory);
+			foreach (var p in pinsForCategory) {
+			    pins.insert(0, p);
+			}
         }
 
 		void newCategory(Category newCategory) {
@@ -189,8 +199,16 @@ namespace Multiclipper {
 		}
 
 		//Pin Handlers
+		void newPin(Pin newPin) {
+			stdout.printf("new pin %s added to category %s", newPin.name, newPin.category);
+			//it doesn't matter what the new pin is if we aren't showing its category
+			//only worry about it if we are currently viewing the category the pin is added to
+			if (newPin.category != selectedCategory) return;
+			pinLock.lock();
+			pins.insert(0, newPin);
+			pinLock.unlock();
+		}
 		///*** End Signal Handlers
-
 
         //*** Start Widget Creation
 		private Widget createHistoryWidget(Object item) {

@@ -71,9 +71,33 @@ namespace Multiclipper {
             return keys;
         }
 
-        public signal void newCategory(Category newCategory);
 
+        public bool insertNewPin(string categoryName, string pinName, string pinText) {
+            //ensure the values entered are valid, likely checked already but let's be safe
+            if (StringHelper.anyNullOrBlank({categoryName, pinName, pinText})) return false;
+            var newPinObj = new Pin(pinName, pinText, categoryName);
+            //make sure the category name we are looking for is present
+            pinLock.lock();
+            var categoryList = pinCategories.get(categoryName);
+            if (categoryList == null) return false;
+            //add new pin to the beginning of the list
+            categoryList.insert(0, newPinObj);
+            pinLock.unlock();
+            newPin(newPinObj);
+            return true;
+        }
+
+        public ArrayList<Pin> getPinsForCategory(string categoryName) {
+            var categoryList = pinCategories.get(categoryName);
+            if (categoryList == null) return new ArrayList<Pin>();
+            return categoryList;
+        }
+
+
+        public signal void newCategory(Category newCategory);
         public signal void removeCategory(Category removedCategory);
+
+        public signal void newPin(Pin newPin);
 
     }
 }
