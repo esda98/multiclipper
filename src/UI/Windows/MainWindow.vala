@@ -38,6 +38,8 @@ namespace Multiclipper {
 
 		//New Pin Elements
 		[GtkChild]
+		Button btnAddPin;
+		[GtkChild]
 		PopoverMenu flyNewPin;
 		[GtkChild]
 		Entry txtName;
@@ -58,6 +60,7 @@ namespace Multiclipper {
 
 		string selectedCategory = "";
 
+        //*** Start Instance Methods
 		public MainWindow (Gtk.Application app) {
 		    Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = true;
 			Object (application: app);
@@ -84,14 +87,27 @@ namespace Multiclipper {
 			}
 		}
 
-		//*** Start Callbacks
-        //Pin Callbacks
-		[GtkCallback]
-		void btnNewPinClicked() {
+		void showNewPinFlyout(Widget relativeToWidget) {
 		    print("new pin clicked!!\n");
+		    flyNewPin.set_relative_to(relativeToWidget);
 		    //set active will not do anything if the index is out of bounds, no error, I can live with that
 		    cboCategory.set_active(0);
 		    flyNewPin.popup();
+		}
+
+		void showPinFlyoutForWidgetAndText(Widget relativeTo, string text) {
+		    stdout.printf("trying to show for text: %s", text);
+		    txtText.buffer.text = text;
+		    showNewPinFlyout(relativeTo);
+		}
+
+		//*** End Instance Methods
+
+		//*** Start Callbacks
+        //Pin Callbacks
+		[GtkCallback]
+		void btnNewPinClickedFromHeaderButton() {
+		    showNewPinFlyout(btnAddPin);
 		}
 
         [GtkCallback]
@@ -113,7 +129,11 @@ namespace Multiclipper {
             if (StringHelper.anyNullOrBlank({name, text, category})) return;
 		    print("save new pin clicked!!\n");
 		    var successfullyInserted = PinManager.getInstance().insertNewPin(category, name, text);
-		    if (successfullyInserted) flyNewPin.popdown();
+		    if (successfullyInserted) {
+		        txtName.text = "";
+		        txtText.buffer.text = "";
+		        flyNewPin.popdown();
+	        }
 		}
 
 		//Category Callbacks
@@ -212,7 +232,9 @@ namespace Multiclipper {
 
         //*** Start Widget Creation
 		private Widget createHistoryWidget(Object item) {
-            return ((HistoricClipboard)item).buildWidget();
+		    var widget = (HistoryWidget)((HistoricClipboard)item).buildWidget();
+		    widget.flyoutPin.connect(showPinFlyoutForWidgetAndText);
+            return widget;
 		}
 
 		private Widget createPinWidget(Object item) {

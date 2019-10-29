@@ -25,8 +25,11 @@ namespace Multiclipper {
 	public class HistoryWidget : EventBox {
 		[GtkChild]
 		Label lblText;
+		[GtkChild]
+		Button btnPin;
 
 		public signal void copyText();
+		public signal void flyoutPin(Widget relativeTo, string text);
 
 		public HistoryWidget (HistoricClipboard historyToDisplay) {
 		    lblText.set_text(historyToDisplay.textValue);
@@ -42,6 +45,12 @@ namespace Multiclipper {
             var labelText = lblText.get_text();
             var defaultClip = Clipboard.get_default(Gdk.Display.get_default());
             defaultClip.set_text(labelText, labelText.length);
+        }
+
+        [GtkCallback]
+        public void btnPinClicked() {
+            print("pin clicked!\n");
+            flyoutPin(btnPin, lblText.get_text());
         }
 
 	}

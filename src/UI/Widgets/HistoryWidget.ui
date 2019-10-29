@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
+<!-- Generated with glade 3.22.0 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkImage" id="imgCopy">
@@ -35,6 +35,7 @@
             <property name="can_focus">False</property>
             <property name="vexpand">True</property>
             <property name="label" translatable="yes">label</property>
+            <property name="wrap">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -54,12 +55,14 @@
             <property name="spacing">7</property>
             <property name="homogeneous">True</property>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="btnPin">
+                <property name="name">btnPin</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="image">imgPin</property>
                 <property name="always_show_image">True</property>
+                <signal name="clicked" handler="btnPinClicked" object="MulticlipperHistoryWidget" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>

@@ -150,7 +150,7 @@
             <property name="image">imgDocNew</property>
             <property name="relief">none</property>
             <property name="always_show_image">True</property>
-            <signal name="clicked" handler="btnNewPinClicked" object="MulticlipperMainWindow" swapped="no"/>
+            <signal name="clicked" handler="btnNewPinClickedFromHeaderButton" object="MulticlipperMainWindow" swapped="no"/>
           </object>
           <packing>
             <property name="pack_type">end</property>
