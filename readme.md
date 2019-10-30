@@ -9,3 +9,6 @@ Store text items you re-use frequently for access at any time. Pins are categori
 
 ### History 
 See how your clipboard history has changed since the app has been open with quick access to copying text from your history to your clipboard for use somewhere else. Quickly persist your history by pinning your history items to a category.
+
+### Clean GTK Interface
+Fully native GTK based clipboard manager with a UI that gets out of your way for you to perform quick interactions with the application. Under the hood, a Vala implementation gives the application fast and consistent performance.

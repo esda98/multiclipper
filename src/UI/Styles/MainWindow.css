@@ -1,28 +1,32 @@
-button {
-  color: white;
-}
-
 .CardTitle {
-  background-color: #262626;
+  border: 0px solid @base_color;
+  border-radius: 6px 10px 0 0;
+  background-color: @base_color;
 }
-
-.CardBody {
-  background-color: #333333;
-}
-
 
 .PinBox {
-  border: 2px solid #262626;
-  border-radius: 5px;
-  max-height: 120px;
+  border: 1px solid darker(@base_color);
+  border-radius: 6px;
 }
 
 .HistoryBox {
-  /*border-top: 2px solid #262626;*/
-  border-bottom: 2px solid #363636;
+  border-bottom: 1px solid darker(@base_color);
 }
 
 .CategoryButton {
   border: 0px solid #000;
   border-radius: 0px;
+}
+
+.PinTextView {
+  border-top: 1px solid darker(@base_color);
+}
+
+.MainScrollView {
+  border-left: 1px solid darker(@base_color);
+  border-right: 1px solid darker(@base_color);
+}
+
+.Sidebar {
+  background-color: @base_color;
 }

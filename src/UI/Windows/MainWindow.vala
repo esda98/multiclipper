@@ -62,7 +62,7 @@ namespace Multiclipper {
 
         //*** Start Instance Methods
 		public MainWindow (Gtk.Application app) {
-		    Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = true;
+		    //Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = true;
 			Object (application: app);
 
             //setup model bindings for display boxes

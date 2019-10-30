@@ -39,7 +39,6 @@
           <object class="GtkScrolledWindow">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="shadow_type">in</property>
             <child>
               <object class="GtkViewport">
                 <property name="visible">True</property>
@@ -51,6 +50,9 @@
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">label</property>
                     <property name="wrap">True</property>
+                    <style>
+                      <class name="PinTextView"/>
+                    </style>
                   </object>
                 </child>
               </object>
