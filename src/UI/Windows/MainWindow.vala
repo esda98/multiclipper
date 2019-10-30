@@ -188,7 +188,7 @@ namespace Multiclipper {
 			selectedCategory = matchingCategory.categoryName;
 			var pinsForCategory = PinManager.getInstance().getPinsForCategory(selectedCategory);
 			foreach (var p in pinsForCategory) {
-			    pins.insert(0, p);
+			    pins.append(p);
 			}
         }
 
@@ -225,7 +225,7 @@ namespace Multiclipper {
 			//only worry about it if we are currently viewing the category the pin is added to
 			if (newPin.category != selectedCategory) return;
 			pinLock.lock();
-			pins.insert(0, newPin);
+			pins.append(newPin);
 			pinLock.unlock();
 		}
 		///*** End Signal Handlers

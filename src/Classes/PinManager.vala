@@ -81,7 +81,7 @@ namespace Multiclipper {
             var categoryList = pinCategories.get(categoryName);
             if (categoryList == null) return false;
             //add new pin to the beginning of the list
-            categoryList.insert(0, newPinObj);
+            categoryList.add(newPinObj);
             pinLock.unlock();
             newPin(newPinObj);
             return true;

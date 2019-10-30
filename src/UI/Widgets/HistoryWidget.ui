@@ -22,23 +22,36 @@
     <property name="can_focus">False</property>
     <child>
       <object class="GtkBox">
-        <property name="width_request">200</property>
-        <property name="height_request">120</property>
+        <property name="width_request">250</property>
+        <property name="height_request">180</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="valign">start</property>
         <property name="border_width">2</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkLabel" id="lblText">
+          <object class="GtkScrolledWindow">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="vexpand">True</property>
-            <property name="label" translatable="yes">label</property>
-            <property name="wrap">True</property>
+            <property name="can_focus">True</property>
+            <property name="shadow_type">in</property>
+            <child>
+              <object class="GtkViewport">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkLabel" id="lblText">
+                    <property name="name">lblText</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">label</property>
+                    <property name="wrap">True</property>
+                  </object>
+                </child>
+              </object>
+            </child>
           </object>
           <packing>
-            <property name="expand">False</property>
+            <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="position">0</property>
           </packing>
