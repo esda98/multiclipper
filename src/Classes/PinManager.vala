@@ -31,7 +31,7 @@ namespace Multiclipper {
 
         PinManager() {
             defaultClip = Clipboard.get_default(Display.get_default());
-            loadCategories();
+            load();
         }
 
         public static PinManager getInstance() {
@@ -53,10 +53,13 @@ namespace Multiclipper {
             return true;
         }
 
-        public async void loadCategories() {
+        public async void load() {
             //later on read from file of saved categories and pins for those categories, just do a default for now
-            print("inserting new category!\n");
-            insertNewCategory("Default");
+            pinCategories = StorageManager.getInstance().loadPins();
+            if (pinCategories.size() == 0) {
+                print("inserting default category!\n");
+                insertNewCategory("Default");
+            }
         }
 
         public ArrayList<string> getAllCategories() {

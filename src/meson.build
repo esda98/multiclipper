@@ -6,6 +6,7 @@ multiclipper_sources = [
   'UI/Widgets/CategoryWidget.vala',
   'Classes/HistoryManager.vala',
   'Classes/PinManager.vala',
+  'Classes/StorageManager.vala',
   'Data/HistoricClipboard.vala',
   'Data/Pin.vala',
   'Data/Category.vala',
